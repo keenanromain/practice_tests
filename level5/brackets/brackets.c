@@ -1,38 +1,31 @@
-#include <unistd.h>
+#nclude <unistd.h>
 
-int		ft_open(char c)
+int		error_out(void)
 {
-	return (c == '(' || c == '{' || c == '[' ? 1 : 0);
+	write(1, "Error\n", 6);
+	return (0);
 }
 
-int		ft_close(char c)
+int		matches(char a, char b)
 {
-	return (c == ')' || c == '}' || c == ']' ? 1 : 0);
+	return ((a == '(' && b == ')') || (a == '[' && b == ']' ) || (a == '{' && b == '}') ? 1 : 0);
 }
 
-int		ft_match(char a, char b)
+int		brackets(char *s)
 {
-	return ((a == '[' && b == ']') || (a == '{' && b == '}') || (a == '(' && b == ')') ? 1 : 0);
-}
+	unsigned char a = 0;
+	unsigned char stack[512];
 
-int		ft_brackets(char *s)
-{
-	int i;
-	char stack[512];
-
-	i = 0;
 	while (*s)
 	{
-		if (ft_open(*s))
-			stack[i++] = *s;
-		if (ft_close(*s))
-			if (i == 0 || !ft_match(stack[--i], *s))
-				return (0);
+		if (*s == '(' || *s == '[' || *s == '{')
+			stack[a++] = *s;
+		if (*s == ')' || *s == ']' || *s == '}')
+			if (a == 0 || !matches(stack[--a], *s))
+				return(error_out());
 		s++;
 	}
-	if (i != 0)
-		return (0);
-	return (1);
+	return (a== 0 ? 1 : error_out());
 }
 
 int		main(int ac, char **av)
@@ -40,17 +33,11 @@ int		main(int ac, char **av)
 	int i;
 
 	i = 0;
-	if (ac > 1)
-	{
-		while (++i < ac)
-		{
-			if (ft_brackets(av[i]))
-				write(1, "OK\n", 3);
-			else
-				write(1, "Error\n", 6);
-		}
-	}
-	else
+	if (ac < 2)
 		write(1, "\n", 1);
+	else
+		while(++i < ac)
+			if (brackets(av[i]))
+				write(1, "OK\n", 3);
 	return (0);
 }

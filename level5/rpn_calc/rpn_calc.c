@@ -3,20 +3,20 @@
 
 int		error_out(void)
 {
-	return (printf("Error\n"));
+	printf("Error\n");
+	return (0);
 }
 
-int		is_num(char c)
+int		is_sign(char *s)
 {
-	return (c >= '0' && c <= '9' ? 1 : 0);
+	return (*s == '+' || *s == '-' || *s == '*' || *s == '/' ||  *s == '%' ? 1 : 0);
 }
 
-int		is_sign(char c)
+int		is_num(char *s)
 {
-	return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%' ? 1 : 0);
+	return ( *s >= '0' && *s <= '9' ? 1 : 0);
 }
-
-int		nb_len(char *s)
+int		numlen(char *s)
 {
 	int size;
 
@@ -26,7 +26,7 @@ int		nb_len(char *s)
 		size++;
 		s++;
 	}
-	while (*s && is_num(*s))
+	while (*s && is_num(s))
 	{
 		size++;
 		s++;
@@ -42,10 +42,10 @@ int		rpn_calc(char *s)
 	i = 0;
 	while (*s)
 	{
-		if (is_num(*s) || (*s == '-' && is_num(*(s + 1))))
+		if (is_num(s) || (*s == '-' && is_num((s + 1))))
 		{
 			stack[i++] = atoi(s);
-			s += nb_len(s);
+			s += numlen(s);
 			continue ;
 		}
 		if (*s == ' ')
@@ -53,8 +53,8 @@ int		rpn_calc(char *s)
 			s++;
 			continue ;
 		}
-		if (!is_sign(*s))
-			return(error_out());
+		if (!is_sign(s))
+			return (error_out());
 		if (*s == '+')
 			stack[i - 2] += stack[i - 1];
 		if (*s == '-')
@@ -76,14 +76,11 @@ int		rpn_calc(char *s)
 		i--;
 		s++;
 	}
-	if (i != 1)
-		return (error_out());
-	return (printf("%d\n", stack[i - 1]));
+	return (i == 1 ? printf("%d\n", stack[0]) : error_out());
 }
 
 int		main(int ac, char **av)
 {
-	if (ac != 2)
-		return (error_out());
-	return(rpn_calc(av[1]));
+	ac == 2 ? rpn_calc(av[1]) : error_out();
+	return (0);
 }
