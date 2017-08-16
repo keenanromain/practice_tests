@@ -1,4 +1,4 @@
-#nclude <unistd.h>
+#include <unistd.h>
 
 int		error_out(void)
 {
@@ -25,7 +25,7 @@ int		brackets(char *s)
 				return(error_out());
 		s++;
 	}
-	return (a== 0 ? 1 : error_out());
+	return (a == 0 ? 1 : error_out());
 }
 
 int		main(int ac, char **av)
