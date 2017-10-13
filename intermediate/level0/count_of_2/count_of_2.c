@@ -20,6 +20,7 @@ int		count_of_2(int n)
 	return (j);
 }
 
+//for testing purposes
 #include <stdio.h>
 
 int		main(void)
