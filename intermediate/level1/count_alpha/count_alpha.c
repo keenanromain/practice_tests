@@ -18,7 +18,6 @@ void	count_alpha(char *s)
 	int i;
 	char *alphabet;
 	int space;
-	int j;
 
 	i = -1;
 	while (++i < 26)
@@ -84,19 +83,6 @@ void	count_alpha(char *s)
 	i = -1;
 	while (++i < 26)
 	{
-		j = 0;
-		while (s[j] && s[j] != alphabet[i])
-			j++;
-		if (letters[i] && alphabet[j])
-		{
-			if (space)
-				printf(", ");
-			printf("%d%c", letters[i], alphabet[i]);
-			space = 1;
-		}
-	}
-	/*while (++i < 26)
-	{
 		if (letters[i] && alphabet[i])
 		{
 			if (space)
@@ -104,7 +90,7 @@ void	count_alpha(char *s)
 			printf("%d%c", letters[i], alphabet[i]);
 			space = 1;
 		}
-	}*/
+	}
 	printf("\n");
 }
 
