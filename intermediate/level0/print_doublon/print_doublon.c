@@ -26,6 +26,7 @@ void	print_doublon(int *a, int na, int *b, int nb)
 	printf("\n");
 }
 
+//for testing purposes
 int main(void)
 {
 
