@@ -21,12 +21,26 @@ struct s_queue *init(void)
 
 void enqueue(struct s_queue *queue, void *content)
 {
+	struct s_node *tmp;
 
+	tmp = (struct s_node *)malloc(sizeof(struct s_node *));
+	tmp->content = content;
+	tmp->next = NULL;
+	queue->last->next = tmp;
+	queue->last = tmp;
 }
 
 void *dequeue(struct s_queue *queue)
 {
-
+	struct s_node *tmp;
+	
+	if (!queue)
+		return (NULL);
+	tmp = (struct s_node *)malloc(sizeof(struct s_node *));
+	tmp->content = queue->first->content;
+	tmp->next = NULL;
+	queue->first = queue->first->next;
+	return (tmp);
 }
 
 void *peek(struct s_queue *queue)
