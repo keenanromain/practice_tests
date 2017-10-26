@@ -3,29 +3,22 @@ struct s_node {
 	struct s_node **nodes;
 };
 
-int		height_tree(struct s_node *root)
+int height_tree(struct s_node *root)
 {
 	if (root)
 	{
+		int max;
 		int ret;
 		int i;
-		int num;
-		struct s_node *tmp;
-		int h;
+		struct s_node **arr;
 
-		ret = 0;
+		max = 0;
+		ret = -1;
 		i = -1;
-		num = 0;
-		tmp = root;
-		while (tmp)
-		{
-			tmp = *(tmp->nodes);
-			num++;
-		}
-		tmp = root;
-		while (++i <= num)
-			if ((h = height_tree(root->nodes[i])) > ret)
-				ret = h;
+		if ((arr = root->nodes;))
+			while (arr[++i])
+				if ((max = height_tree(arr[i])) > ret)
+					ret = max;
 		return (ret + 1);
 	}
 	return (-1);
