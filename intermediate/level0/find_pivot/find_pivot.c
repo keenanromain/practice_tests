@@ -7,7 +7,7 @@ int greater(int *arr, int half, int n, int sum)
 int lesser(int *arr, int half, int n, int sum)
 {
 	while (--half > n)
-		sum -= arr[half];
+		sum += arr[half];
 	return (sum);
 }
 

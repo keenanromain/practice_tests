@@ -13,7 +13,7 @@ struct s_stack *init(void)
 {
 	struct s_stack *stack;
 
-	stack = (struct s_stack *)malloc(sizeof(struct s_stack *));
+	stack = (struct s_stack *)malloc(sizeof(struct s_stack));
 	stack->top = NULL;
 	return (stack);
 }
@@ -22,12 +22,14 @@ void *pop(struct s_stack *stack)
 {
 	if (stack && stack->top)
 	{
-		struct s_stack *tmp;
+		struct s_node *node;
+		void *content;
 
-		tmp = init();
-		tmp->top = stack->top;
+		node = stack->top;
+		content = node->content;
 		stack->top = stack->top->next;
-		return(tmp->top);
+		free(node);
+		return (content);
 	}
 	return (NULL);
 }
@@ -36,7 +38,7 @@ void push(struct s_stack *stack, void *content)
 {
 	struct s_node *newTop;
 
-	newTop = (struct s_node *)malloc(sizeof(struct s_node *));
+	newTop = (struct s_node *)malloc(sizeof(struct s_node));
 	newTop->content = content;
 	newTop->next = stack->top;
 	stack->top = newTop;
@@ -45,7 +47,7 @@ void push(struct s_stack *stack, void *content)
 void *peek(struct s_stack *stack)
 {
 	if (stack && stack->top)
-		return(stack->top);
+		return(stack->top->content);
 	return (NULL);
 }
 

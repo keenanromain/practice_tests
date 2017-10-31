@@ -15,10 +15,16 @@ int height_tree(struct s_node *root)
 		max = 0;
 		ret = -1;
 		i = -1;
-		if ((arr = root->nodes;))
+		arr = root->nodes;
+		if (arr)
+		{
 			while (arr[++i])
-				if ((max = height_tree(arr[i])) > ret)
+			{
+				max = height_tree(arr[i]);
+				if (max > ret)
 					ret = max;
+			}
+		}
 		return (ret + 1);
 	}
 	return (-1);
