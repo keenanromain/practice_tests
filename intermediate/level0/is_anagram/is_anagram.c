@@ -1,7 +1,7 @@
 int		is_anagram(char *a, char *b)
 {
-	int first[26] = {0};
-	int second[26] = {0};
+	int first[26] = {};
+	int second[26] = {};
 	int i;
 
 	i = -1;
