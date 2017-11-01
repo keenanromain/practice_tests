@@ -6,8 +6,6 @@ int		count_of_2(int n)
 
 	i = 2;
 	j = 0;
-	if (n <= 1)
-		return (0);
 	while (i <= n)
 	{
 		k = i;

@@ -1,33 +1,47 @@
-int		ft_strlen(char *s)
-{
-	int i;
-
-	i = -1;
-	while (s[++i])
-		;
-	return (i);
-}
-
-int		cant_find_a_in_b(char a, char *b)
-{
-	int i;
-
-	i = -1;
-	while (b[++i])
-		if (a == b[i] && (b[i] = 9))
-			return (0);
-	return (1);
-}
-
 int		is_anagram(char *a, char *b)
 {
+	int first[26] = {0};
+	int second[26] = {0};
 	int i;
 
-	if (ft_strlen(a) != ft_strlen(b))
-		return (0);
 	i = -1;
 	while (a[++i])
-		if (cant_find_a_in_b(a[i], b))
+		first[a[i] - 'a']++;
+	i = -1;
+	while (b[++i])
+		second[b[i] - 'a']++;
+	i = -1;
+	while (++i < 26)
+		if (first[i] != second[i])
 			return (0);
 	return (1);
+}
+
+// Kyle's testing suite
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char *ft_strdup(char *str)
+{
+		char *new = (char *)malloc(strlen(str) + 1);
+		new = strcpy(new, str);
+		return (new);
+}
+
+int main()
+{
+	char *s1;
+	char *s2;
+
+	s1 = ft_strdup("abcdef");
+	s2 = ft_strdup("fabcde");
+	printf("Output: %d, answer: %d\n", is_anagram(s1, s2), 1);
+	s1 = ft_strdup("basiparachromatin");
+	s2 = ft_strdup("marsipobranchiata");
+	printf("Output: %d, answer: %d\n", is_anagram(s1, s2), 1);
+	s1 = ft_strdup("abca");
+	s2 = ft_strdup("bcab");
+	printf("Output: %d, answer: %d\n", is_anagram(s1, s2), 0);
+	return (0);
 }
