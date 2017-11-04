@@ -1,17 +1,17 @@
 int		is_anagram(char *a, char *b)
 {
-	int first[26] = {};
-	int second[26] = {};
+	int first[94] = {};
+	int second[94] = {};
 	int i;
 
 	i = -1;
 	while (a[++i])
-		first[a[i] - 'a']++;
+		first[a[i] - ' ']++;
 	i = -1;
 	while (b[++i])
-		second[b[i] - 'a']++;
+		second[b[i] - ' ']++;
 	i = -1;
-	while (++i < 26)
+	while (++i < 94)
 		if (first[i] != second[i])
 			return (0);
 	return (1);
