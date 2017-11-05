@@ -23,14 +23,18 @@ int		width_tree(struct s_node *n)
 	{
 		int l_height;
 		int r_height;
+		int total_height;
 		int l_width;
 		int r_width;
+		int total_width;
 
 		l_height = height_tree(n->left);
 		r_height = height_tree(n->right);
 		l_width = width_tree(n->left);
 		r_width = width_tree(n->right);
-		return (max(1 + l_height + r_height, max(l_width, r_width)));
+		total_height = 1 + l_height + r_height;
+		total_width = max(l_width, r_width);
+		return (max(total_height, total_width));
 	}
 	return (0);
 }
