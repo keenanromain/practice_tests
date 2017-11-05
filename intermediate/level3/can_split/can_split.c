@@ -14,9 +14,7 @@ int		check_nodes(struct s_node *n, int total, int *ret)
 {
 	if (n)
 	{
-		int curr;
-
-		curr = 1 + check_nodes(n->left, total, ret) + check_nodes(n->right, total, ret);
+		int curr = 1 + check_nodes(n->left, total, ret) + check_nodes(n->right, total, ret);
 		if (curr == total - curr)
 			*ret = 1;
 	}
@@ -25,16 +23,10 @@ int		check_nodes(struct s_node *n, int total, int *ret)
 
 int		can_split(struct s_node *n)
 {
-	int ret;
+	int ret = 0;
 
-	ret = 0;
 	if (n)
-	{
-		int total;
-
-		total = tree_size(n);
-		check_nodes(n, total, &ret);
-	}
+		check_nodes(n, tree_size(n), &ret);
 	return (ret);
 }
 
