@@ -29,11 +29,11 @@ int		gold_gain(int **mine, int n)
 		while (++y < n)
 		{
 			x = 0;
-			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x + 1][y - 1]);							//top position in a column can only be summed with the previous column's top spot or one below it. See the bottom column's position for a mirror
+			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x + 1][y - 1]);								//top position in a column can only be summed with the previous column's top spot or one below it. See the bottom column's position for a mirror
 			while (++x < n - 1)
-				tab[x][y] = mine[x][y] + max_of_three(tab[x - 1][y - 1], tab[x][y - 1], tab[x + 1][y - 1]); //run through the middle elements of each columne
-			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x - 1][y - 1]);							// the highest value is always stored in the bottom column as the middle column's highest value progressed down the loop as it executed
-			ret = max_of_two(tab[x][y], tab[x - 1][y]);														// then ret stores said value if it is higher than the previous column's bottom-most value
+				tab[x][y] = mine[x][y] + max_of_three(tab[x - 1][y - 1], tab[x][y - 1], tab[x + 1][y - 1]);		//run through the middle elements of each columne
+			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x - 1][y - 1]);								// the highest value is always stored in the bottom column as the middle column's highest value progressed down the loop as it executed
+			ret = max_of_two(tab[x][y], tab[x - 1][y]);															// then ret stores said value if it is higher than the previous column's bottom-most value
 		}
 	}
 	return (mine && n == 1 ? mine[0][0] : ret);
