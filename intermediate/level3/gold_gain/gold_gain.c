@@ -1,51 +1,48 @@
-#include <stdlib.h>
+#include <stdio.h>
 
-int		ft_max(int **tab, int n, int col)
+int		max_of_two(int a, int b)
 {
-	int i;
-	int ret;
-
-	i = -1;
-	ret = 0;
-	while (++i < n)
-		ret = tab[i][col] > ret ? tab[i][col] : ret;
-	return (ret);
+	return (a > b ? a : b);
 }
 
-int		check_top(int **mine, int i);
-int		check_middle(int **mine, int i);
-int		check_bottom(int **mine, int i);
+int		max_of_three(int a, int b, int c)
+{
+	if (a > b)
+		return (a > c ? a : c);
+	return (b > c ? b : c);
+}
 
 int		gold_gain(int **mine, int n)
 {
-	int i;
-	int j;
-	int	ret;
-	int **tab;
+	int		tab[n][n];
+	int		ret;
+	int		x;
+	int		y;
 
 	ret = 0;
-	if (n > 0)
+	if (mine && n > 1)
 	{
-		i = 0;
-		j = 0;
-		if (n == 1)
-			return (mine[i][j]);
-		//fill tab copy with mine's first column
-		i = -1;
-		while (++i < n)
-			tab[i][0] = mine[i][0];
-		//now run thru mine's second to n columns following Kyle's method
-		i = 0; // start at second column as we know what's in the first
-		while (++i < n)
+		x = -1;
+		while (++x < n)
+			tab[x][0] = mine[x][0];
+		y = 0;
+		while (++y < n)
 		{
-			if (i == 1)
-				tab[i][++j] = check_top(mine, i);
-			else if (i + 1 == n)
-				tab[i][++j] = check_bottom(mine, i);
-			else
-				tab[i][++j] = check_middle(mine, i);
+			x = 0;
+			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x + 1][y - 1]);							//top position in a column can only be summed with the previous column's top spot or one below it. See the bottom column's position for a mirror
+			while (++x < n - 1)
+				tab[x][y] = mine[x][y] + max_of_three(tab[x - 1][y - 1], tab[x][y - 1], tab[x + 1][y - 1]); //run through the middle elements of each columne
+			tab[x][y] = mine[x][y] + max_of_two(tab[x][y - 1], tab[x - 1][y - 1]);							// the highest value is always stored in the bottom column as the middle column's highest value progressed down the loop as it executed
+			ret = max_of_two(tab[x][y], tab[x - 1][y]);														// then ret stores said value if it is higher than the previous column's bottom-most value
 		}
-		ret = ft_max(tab, n, n - 1); //fill ret's value with the max value stored in tab's final column.
 	}
-	return (ret);
+	return (mine && n == 1 ? mine[0][0] : ret);
 }
+
+/*
+ * 7 0 3 9 2  <- only can check back-left and back-left-below
+ * 4 3 2 6 6  {
+ * 4 1 6 3 2  {- can check back-left, back-left-below, and back-left-above which is why the inner loop is ran
+ * 3 5 5 7 8  {
+ * 1 8 6 1 2  <- only can check back-left and back-left-above
+ */
